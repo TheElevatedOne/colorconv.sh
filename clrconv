@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+rgb2frgb() {
+  local r="$1"
+  local g="$2"
+  local b="$3"
+
+  local fr="$(echo "$r" | awk '{print $1/255}')"
+  local fg="$(echo "$g" | awk '{print $1/255}')"
+  local fb="$(echo "$b" | awk '{print $1/255}')"
+
+  echo "$fr $fg $fb"
+}
+
+frgb2rgb() {
+  local fr="$1"
+  local fg="$2"
+  local fb="$3"
+
+  local r="$(echo "$fr" | awk '{printf "%.0f",$1*255}')"
+  local g="$(echo "$fg" | awk '{printf "%.0f",$1*255}')"
+  local b="$(echo "$fb" | awk '{printf "%.0f",$1*255}')"
+
+  echo "$r $g $b"
+}
+
+hex2rgb() {
+  local hex="$1"
+
+  local r="$((16#${hex:1:2}))"
+  local g="$((16#${hex:3:2}))"
+  local b="$((16#${hex:5:2}))"
+
+  echo "$r $g $b"
+}
+
+rgb2hex() {
+  local r="$1"
+  local g="$2"
+  local b="$3"
+
+  local hex="#$(printf "%02X" $1)$(printf "%02X" $2)$(printf "%02X" $3)"
+
+  echo "$hex"
+}
+
+rgb2hsl() {
+  IFS=' ' read -r -a frgb <<<"$(rgb2frgb "$1" "$2" "$3")"
+  unset IFS
+
+  local min="${frgb[0]}"
+  local max="${frgb[0]}"
+
+  for i in "${frgb[@]}"; do
+    [ $(echo "$i > $max" | bc) = 1 ] && max=$i
+    [ $(echo "$i < $min" | bc) = 1 ] && min=$i
+  done
+
+  local l="$(echo "$min $max" | awk '{printf "%.0f",(($1+$2)/2)*100}')"
+  local s="$(echo "$min $max $l" | awk '{if ($1 == $2) {print 0} else if ($3 <= 0.5) {printf "%.0f",((($2 - $1)/($2 + $1)) * 100)} else if ($3 > 0.5) {printf "%.0f",((($2 - $1)/(2 - $2 - $1)) * 100)}}')"
+  local h="$(echo "$min $max ${frgb[0]} ${frgb[1]} ${frgb[2]}" | awk '{if ($2 == $3) {printf "%.0f",((($4 - $5)/($2 - $1)) * 60)} else if ($2 == $4) {printf "%.0f",(((2 - ($5 - $3))/($2 - $1)) * 60)} else if ($5 == $2) {printf "%.0f",(((4 + ($3 - $4))/($2 - $1)) * 60)}}')"
+
+  echo "$h $s $l"
+}
+
+hsl2rgb() {
+
+}
+
+case $1 in
+-h)
+  printf "BASH COLOR CONVERTER\n"
+  exit 1
+  ;;
+
+--help)
+  printf "BASH COLOR CONVERTER\n"
+  exit 1
+  ;;
+esac
