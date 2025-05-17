@@ -1,5 +1,23 @@
 #!/usr/bin/env bash
 
+help_fn() {
+  printf "> test [TEST] [VALUES]\n"
+  printf "  --------------------------------------\n"
+  printf "  TEST -> Color Convertion Function\n"
+  printf "  VALUES -> String in quotes with Values\n"
+  printf "            for the Functions (optional)\n"
+  printf "            Will use predefined values\n"
+  printf "            If left empty.\n"
+  printf "  --------------------------------------\n"
+  printf "  options -> rgb2frgb\n"
+  printf "          -> frgb2rgb\n"
+  printf "          -> hex2rgb\n"
+  printf "          -> rgb2hex\n"
+  printf "          -> hsl2rgb\n"
+  printf "          -> rgb2hsl\n"
+  printf "\n"
+}
+
 source ./clrconv
 
 case $1 in
@@ -31,5 +49,20 @@ rgb2hsl)
   echo "Input: 240 128 10"
   ret=$(rgb2hsl "240" "128" "10")
   echo "Output: $ret"
+  ;;
+
+--help)
+  help_fn
+  exit 1
+  ;;
+
+-h)
+  help_fn
+  exit 1
+  ;;
+
+*)
+  help_fn
+  exit 1
   ;;
 esac

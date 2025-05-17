@@ -63,10 +63,6 @@ rgb2hsl() {
   echo "$h $s $l"
 }
 
-hsl2rgb() {
-
-}
-
 case $1 in
 -h)
   printf "BASH COLOR CONVERTER\n"

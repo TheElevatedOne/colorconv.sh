@@ -1,2 +1,12 @@
 # crlconv
-Bash Color Converter Script
+
+---
+
+## Bash Color Converter Script
+
+---
+
+### Usage:
+```bash
+source /path/to/clrconv
+```
