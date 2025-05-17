@@ -18,7 +18,7 @@ help_fn() {
   printf "\n"
 }
 
-source ./clrconv
+source ./colorconv.sh
 
 case $1 in
 rgb2frgb)
