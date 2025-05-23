@@ -21,15 +21,16 @@ help_fn() {
 source ./colorconv.sh
 
 case $1 in
+all) ;;
 rgb2frgb)
   echo "Input: 128 255 64"
-  ret=$(rgb2frgb "128" "255" "64")
+  ret=$(rgb2frgb "128 255 64")
   echo "Output: $ret"
   ;;
 
 frgb2rgb)
   echo "Input: 0.5 1 0.25"
-  ret=$(frgb2rgb "0.5" "1" "0.25")
+  ret=$(frgb2rgb "0.5 1 0.25")
   echo "Output: $ret"
   ;;
 
@@ -41,13 +42,19 @@ hex2rgb)
 
 rgb2hex)
   echo "Input: 255 128 0"
-  ret=$(rgb2hex "255" "128" "0")
+  ret=$(rgb2hex "255 128 0")
+  echo "Output: $ret"
+  ;;
+
+hsl2rgb)
+  echo "Input: 31 88 49"
+  ret=$(hsl2rgb "31 88 49")
   echo "Output: $ret"
   ;;
 
 rgb2hsl)
   echo "Input: 240 128 10"
-  ret=$(rgb2hsl "240" "128" "10")
+  ret=$(rgb2hsl "240 128 10")
   echo "Output: $ret"
   ;;
 
